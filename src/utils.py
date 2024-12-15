@@ -3,12 +3,9 @@ def overlap(a: tuple[int, int], b: tuple[int, int]) -> bool:
 
 
 def search_start(rs: list[tuple[int, int]], duration: int, inf: int, sup: int):
-    task_start = None
-    possible_starts = list(range(inf, sup - duration))
-    for start in possible_starts:
+    for start in range(inf, sup - duration):
         interval = (start, start + duration)
 
         if all(not overlap(r, interval) for r in rs):
-            task_start = start
-            break
-    return task_start
+            return start
+    return None

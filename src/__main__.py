@@ -14,9 +14,7 @@ def create_greedy_pool(problems: Iterable[Problem], size: int):
     with futures.ProcessPoolExecutor() as executor:
         for problem in problems:
             greedy_pool_by_problem[problem.problem_tag] = [
-                result
-                for result in executor.map(greedy, [problem] * size)
-                if result is not None
+                result for result in executor.map(greedy, [problem] * size) if result
             ]
     return greedy_pool_by_problem
 
@@ -40,4 +38,6 @@ if __name__ == "__main__":
     greedy_pool_by_problem = create_greedy_pool(problems, greedy_pool_size)
 
     output_dir = "results"
-    run_jobs(problems, greedy_pool_by_problem, configurations, runs, generations, output_dir)
+    run_jobs(
+        problems, greedy_pool_by_problem, configurations, runs, generations, output_dir
+    )

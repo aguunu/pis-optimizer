@@ -20,45 +20,21 @@ class CustomMutation(Mutation[IntegerSolution]):
         total_workers = self.data.total_workers
         start_offset = total_tasks * total_workers
 
-        assignments = np.array(source.variables[:start_offset]).reshape((total_workers, total_tasks))
+        assignments = np.array(source.variables[:start_offset]).reshape(
+            (total_workers, total_tasks)
+        )
 
         for t in range(total_tasks):
             if random.random() <= self.probability:
+                if self.data.task_demand[t] == total_workers:
+                    # podría reasignarse el inicio de la tarea
+                    continue
+
                 w1 = np.random.choice(np.where(assignments[:, t] == 1)[0])
                 w2 = np.random.choice(np.where(assignments[:, t] == 0)[0])
+
                 assignments[w1][t] = 0
                 assignments[w2][t] = 1
-
-                # t_workers = [
-                #     w
-                #     for w in range(total_workers)
-                #     if source.variables[total_tasks * w + t] == 1
-                # ]
-                # t_not_workers = [
-                #     w
-                #     for w in range(total_workers)
-                #     if source.variables[total_tasks * w + t] == 0
-                # ]
-
-                # w1 = random.choice(
-                #     [
-                #         w
-                #         for w in range(total_workers)
-                #         if source.variables[total_tasks * w + t] == 1
-                #     ]
-                # )
-                # w2 = random.choice(
-                #     [
-                #         w
-                #         for w in range(total_workers)
-                #         if source.variables[total_tasks * w + t] == 0
-                #     ]
-                # )
-                # w1 = random.choice(t_workers)
-                # TODO: se rompe si en una tarea todos los miembros estan asignados
-                # w2 = random.choice(t_not_workers)
-                # t_workers.remove(w1)
-                # t_workers.append(w2)
 
                 # armar restricciones
                 rs = []

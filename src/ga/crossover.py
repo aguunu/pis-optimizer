@@ -14,10 +14,10 @@ class CustomCrossover(Crossover[IntegerSolution, IntegerSolution]):
         self.data = data
 
     def execute(self, source: list[IntegerSolution]) -> list[IntegerSolution]:
-        offspring = copy.deepcopy(source[0])
-
         if random.random() > self.probability:
             return source
+
+        offspring = copy.deepcopy(source[0])
 
         total_tasks = self.data.total_tasks
         total_workers = self.data.total_workers
@@ -46,8 +46,8 @@ class CustomCrossover(Crossover[IntegerSolution, IntegerSolution]):
                     offspring.variables[start_time_offset + dependency]
                     + self.data.task_duration[dependency]
                     + 1
-                    for dependency, x in enumerate(self.data.task_dependencies[t])
-                    if x == 1
+                    for dependency, depends in enumerate(self.data.task_dependencies[t])
+                    if depends == 1
                 ),
                 default=self.data.min_slot,
             )

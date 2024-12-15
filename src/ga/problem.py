@@ -42,23 +42,31 @@ class CustomProblem(IntegerProblem):
         total_workers = self.data.total_workers
 
         offset = total_workers * total_tasks
-        assignments = np.array(solution.variables[:offset]).reshape((total_workers, total_tasks))
+        assignments = np.array(solution.variables[:offset]).reshape(
+            (total_workers, total_tasks)
+        )
 
         task_preferences = np.sum(assignments * self.data.task_preferences, axis=1)
 
-        acc_group_preferences = (self.data.group_preferences @ assignments) * assignments
-        mean_group_preference_by_task_worker = acc_group_preferences / self.data.task_demand
-        mean_group_preference_by_worker = mean_group_preference_by_task_worker.sum(axis=1)
+        acc_group_preferences = (
+            self.data.group_preferences @ assignments
+        ) * assignments
+        mean_group_preference_by_task_worker = (
+            acc_group_preferences / self.data.task_demand
+        )
+        mean_group_preference_by_worker = mean_group_preference_by_task_worker.sum(
+            axis=1
+        )
 
         preferences = task_preferences + mean_group_preference_by_worker
-        
+
         # normalize
         tasks_by_worker = assignments.sum(axis=1)
         preference_score = np.sum(preferences / tasks_by_worker)
 
-        solution.objectives[0] = - preference_score
+        solution.objectives[0] = -preference_score
         solution.objectives[1] = np.var(assignments @ self.data.task_demand)
-        
+
         return solution
         # task_workers = [
         #     [
