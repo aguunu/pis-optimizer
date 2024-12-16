@@ -105,7 +105,3 @@ def load_data(data_path: str):
             problems.append(problem)
 
     return problems
-
-
-data_path = os.path.join("data")
-problems = load_data(data_path)
