@@ -20,18 +20,18 @@ def create_greedy_pool(problems: Iterable[Problem], size: int):
 
 
 if __name__ == "__main__":
-    runs = 30
-    generations = 200
+    runs = 50
+    generations = 400
     p_mutations = [0.1, 0.01, 0.001]
     p_crossovers = [1.0, 0.9, 0.6]
-    populations = [80, 120, 160]
+    populations = [100, 150, 200]
 
     configurations = {
         f"C{i:02}": config
         for i, config in enumerate(product(p_mutations, p_crossovers, populations))
     }
 
-    data_path = os.path.join("data")
+    data_path = os.path.join("data", "CAL")
     problems = load_data(data_path)
 
     greedy_pool_size = 200

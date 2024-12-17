@@ -38,7 +38,6 @@ class CustomMutation(Mutation[IntegerSolution]):
 
                 # armar restricciones
                 rs = []
-                # for w in t_workers:
                 for w in np.where(assignments[:, t] == 1)[0]:
                     rs.extend(self.data.worker_restrictions[w])
                     rs.extend(
