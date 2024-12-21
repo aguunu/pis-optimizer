@@ -29,7 +29,6 @@ def run_job(x):
             termination_criterion=StoppingByEvaluations(max_evaluations=generations),
             dominance_comparator=DominanceWithConstraintsComparator(),
         )
-        print("F\n", end="")
 
         algorithm.run()
         collected_results.append(
