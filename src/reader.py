@@ -60,7 +60,7 @@ def load_problem(problem_path: str):
     for w1, w2, preference in df_group_preferences.itertuples(index=False):
         preferences_group[w1][w2] = preference
         preferences_group[w2][w1] = preference
-    np.fill_diagonal(preferences_group, 0)  # por las dudas
+    np.fill_diagonal(preferences_group, 0)
 
     df_dependencies = pd.read_csv(
         os.path.join(problem_path, "dependencias.csv"), header=None

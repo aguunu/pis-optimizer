@@ -84,7 +84,6 @@ def run_jobs(
                         of.write(str(time))
                     solutions.extend(result)
 
-            print("E\n", end="")
             front = get_non_dominated_solutions(solutions)
 
             print_function_values_to_file(
