@@ -76,7 +76,7 @@ class CustomCrossover(Crossover[IntegerSolution, IntegerSolution]):
         return 2
 
     def get_number_of_children(self) -> int:
-        return 2
+        return 1
 
     def get_name(self) -> str:
         return "Custom Crossover"
